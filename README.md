@@ -6,6 +6,10 @@
 
 AI Exam Coach turns an answer into an evidence-bound learning action. It maps a selected distractor to a concept-confusion code, connects that code to the exact instructor-owned lesson or textbook location, schedules a retry, and aggregates the same signal into an instructor reinforcement priority.
 
+## Repository Role
+
+This repository is the public award reference implementation. The `agent-forge-seoul-2026-2nd-place` tag and matching archive branch preserve the award version; later `main` content is not byte-identical to that tag. The [Daytona HackSprint public synthetic demo](https://github.com/axfehlerlee/exam-coach-daytona-hacksprint-2026-09-19-public) is a separate follow-up event snapshot with written-answer and instructor-feedback workflows. Neither public snapshot establishes the current product development source.
+
 ## Live Demo
 
 - Reviewer app: <https://exam-coach-demo.geilesgruen.workers.dev>
