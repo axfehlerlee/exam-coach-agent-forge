@@ -1,0 +1,450 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>손해사정사 AI 퀴즈 코치</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700;800;900&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: single centered column; a top-to-bottom flow of 4 numbered stage cards
+     joined by arrows, then a security callout and a to-do card. */
+  :root {
+    --bg: #eef1f6;
+    --surface: #ffffff;
+    --surface-2: #f6f8fc;
+    --fg: #182230;
+    --muted: #586475;
+    --border: #e0e5ee;
+    --accent: #2563eb;
+    --accent-ink: #1d4ed8;
+    --accent-soft: #e6eefc;
+    --num-ink: #ffffff;
+    --teal: #0f766e;
+    --teal-soft: #dcf3ef;
+    --warn-ink: #9a5b00;
+    --warn-soft: #fbeecf;
+    --warn-border: #f0d79a;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    --display: "Gothic A1", "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+    --shadow: 0 1px 2px rgba(20,30,50,.05), 0 6px 20px rgba(20,30,50,.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0e131b;
+      --surface: #161d28;
+      --surface-2: #1b2430;
+      --fg: #e8edf5;
+      --muted: #9fadbf;
+      --border: #28333f;
+      --accent: #5b8cff;
+      --accent-ink: #8fb0ff;
+      --accent-soft: #1a2740;
+      --num-ink: #0e131b;
+      --teal: #4fd1c0;
+      --teal-soft: #13302c;
+      --warn-ink: #f0c15a;
+      --warn-soft: #30260f;
+      --warn-border: #4d3d14;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0e131b;
+    --surface: #161d28;
+    --surface-2: #1b2430;
+    --fg: #e8edf5;
+    --muted: #9fadbf;
+    --border: #28333f;
+    --accent: #5b8cff;
+    --accent-ink: #8fb0ff;
+    --accent-soft: #1a2740;
+    --num-ink: #0e131b;
+    --teal: #4fd1c0;
+    --teal-soft: #13302c;
+    --warn-ink: #f0c15a;
+    --warn-soft: #30260f;
+    --warn-border: #4d3d14;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 56px;
+  }
+
+  /* ---- header ---- */
+  .eyebrow {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    padding: 5px 11px;
+    border-radius: 999px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(1.6rem, 5.5vw, 2.35rem);
+    line-height: 1.22;
+    margin: 16px 0 10px;
+    text-wrap: balance;
+    letter-spacing: -.01em;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 1.02rem;
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  /* ---- at-a-glance strip ---- */
+  .glance {
+    margin-top: 26px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 16px;
+    box-shadow: var(--shadow);
+  }
+  .glance-h {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: .95rem;
+    margin: 0 0 14px;
+    color: var(--fg);
+  }
+  .strip {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .pill {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 8px;
+  }
+  .pill .ic { font-size: 1.35rem; line-height: 1; }
+  .pill .lb {
+    display: block;
+    margin-top: 6px;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--fg);
+    word-break: keep-all;
+  }
+  .arrow {
+    align-self: center;
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex: 0 0 auto;
+  }
+  @media (max-width: 560px) {
+    .strip { flex-direction: column; }
+    .arrow { transform: rotate(90deg); }
+    .pill { display: flex; align-items: center; gap: 10px; text-align: left; }
+    .pill .lb { margin-top: 0; }
+  }
+
+  /* ---- flow of stages ---- */
+  .flow { margin-top: 30px; display: flex; flex-direction: column; align-items: center; }
+  .down {
+    color: var(--accent);
+    font-size: 1.5rem;
+    line-height: 1;
+    margin: 4px 0;
+  }
+  .stage {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 20px 18px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    background: var(--accent);
+  }
+  .stage-head { display: flex; align-items: center; gap: 13px; }
+  .num {
+    flex: 0 0 auto;
+    width: 40px; height: 40px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--num-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+  .stage-title {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.18rem;
+    margin: 0;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    word-break: keep-all;
+  }
+  .stage-title .emoji { font-size: 1.15rem; }
+  .file {
+    font-family: var(--mono);
+    font-size: .78rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 3px 8px;
+    border-radius: 7px;
+    display: inline-block;
+    margin-top: 10px;
+    word-break: break-all;
+  }
+  .cap {
+    margin: 12px 0 0;
+    font-size: 1rem;
+    color: var(--fg);
+  }
+  .cap strong { color: var(--accent-ink); }
+  ul.pts {
+    margin: 13px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  ul.pts li {
+    position: relative;
+    padding-left: 20px;
+    font-size: .94rem;
+    color: var(--muted);
+    word-break: keep-all;
+  }
+  ul.pts li::before {
+    content: "";
+    position: absolute;
+    left: 2px; top: .62em;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--teal);
+  }
+  ul.pts li b { color: var(--fg); font-weight: 700; }
+  code {
+    font-family: var(--mono);
+    font-size: .86em;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    padding: 1px 5px;
+    border-radius: 5px;
+    word-break: break-all;
+  }
+  .free {
+    display: inline-block;
+    font-size: .76rem;
+    font-weight: 700;
+    color: var(--teal);
+    background: var(--teal-soft);
+    border-radius: 999px;
+    padding: 2px 9px;
+    margin-left: 2px;
+  }
+
+  /* ---- security callout ---- */
+  .secure {
+    margin-top: 30px;
+    background: var(--warn-soft);
+    border: 1px solid var(--warn-border);
+    border-radius: 18px;
+    padding: 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .secure .lock { font-size: 1.7rem; line-height: 1; flex: 0 0 auto; }
+  .secure h3 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.05rem;
+    margin: 2px 0 6px;
+    color: var(--warn-ink);
+  }
+  .secure p { margin: 0; font-size: .96rem; color: var(--fg); }
+
+  /* ---- to-do card ---- */
+  .todo {
+    margin-top: 22px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .todo h3 {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.22rem;
+    margin: 0 0 4px;
+    display: flex; align-items: center; gap: 9px;
+    word-break: keep-all;
+  }
+  .todo .sub { margin: 0 0 16px; color: var(--muted); font-size: .92rem; }
+  ol.steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; counter-reset: s; }
+  ol.steps li {
+    display: flex; gap: 13px; align-items: flex-start;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 13px 14px;
+  }
+  ol.steps li::before {
+    counter-increment: s;
+    content: counter(s);
+    flex: 0 0 auto;
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: .95rem;
+  }
+  ol.steps li .txt { font-size: .97rem; color: var(--fg); word-break: keep-all; }
+  ol.steps li .txt small { display: block; color: var(--muted); font-size: .84rem; margin-top: 3px; }
+
+  footer {
+    margin-top: 30px;
+    text-align: center;
+    color: var(--muted);
+    font-size: .82rem;
+  }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">AI Exam Coach</span>
+    <h1>손해사정사 문제 생성 + Slack 퀴즈 배포<br>— 어떻게 돌아가나요?</h1>
+    <p class="lede">주제만 넣으면 AI가 새 문제를 만들고, 슬랙으로 퀴즈를 내고, 바로 채점·해설까지 해주는 흐름이에요. 아래를 따라 내려오면 한눈에 보여요.</p>
+  </header>
+
+  <section class="glance" aria-label="전체 흐름 한눈에 보기">
+    <h3 class="glance-h">한눈에 보기 · 4단계</h3>
+    <div class="strip">
+      <div class="pill"><span class="ic">📚</span><span class="lb">출제범위</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="pill"><span class="ic">✍️</span><span class="lb">문제 생성</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="pill"><span class="ic">💬</span><span class="lb">Slack 퀴즈</span></div>
+      <span class="arrow" aria-hidden="true">→</span>
+      <div class="pill"><span class="ic">📈</span><span class="lb">학습 분석</span></div>
+    </div>
+  </section>
+
+  <div class="flow">
+
+    <!-- 1 -->
+    <article class="stage">
+      <div class="stage-head">
+        <div class="num" aria-hidden="true">1</div>
+        <h2 class="stage-title"><span class="emoji">📚</span> 출제범위 정하기</h2>
+      </div>
+      <span class="file">data/exam-syllabus.json</span>
+      <p class="cap"><strong>실제 기출문제 원문은 올리지 않아요.</strong> 주제·단원만 참고해서 "같은 주제의 새 문제"를 만드는 게 핵심이에요.</p>
+      <ul class="pts">
+        <li><b>1차(객관식) 3과목</b> — 보험업법 · 보험계약법(상법 보험편) · 손해사정이론</li>
+        <li><b>2차(서술형) 4과목</b> — 종류별(재물/차량/신체/종합), 지금은 자리만 잡아둔 상태라 정은님이 수정해요</li>
+      </ul>
+    </article>
+    <div class="down" aria-hidden="true">▼</div>
+
+    <!-- 2 -->
+    <article class="stage">
+      <div class="stage-head">
+        <div class="num" aria-hidden="true">2</div>
+        <h2 class="stage-title"><span class="emoji">✍️</span> 문제 생성기</h2>
+      </div>
+      <span class="file">src/question-generator.mjs</span>
+      <p class="cap">주제를 넣으면 AI가 같은 주제로 <strong>새 문제</strong>를 써줘요.</p>
+      <ul class="pts">
+        <li><b>두뇌(AI) 선택</b> — ① Qwen 무료 등급(키가 있을 때) ② 키가 없으면 오프라인 템플릿 <span class="free">추가 비용 0원</span></li>
+        <li><b>만들어 주는 것</b> — 문제 + 보기(A/B/C/D) + 정답 + 해설 + 오답코드(약점 표시용)</li>
+      </ul>
+    </article>
+    <div class="down" aria-hidden="true">▼</div>
+
+    <!-- 3 -->
+    <article class="stage">
+      <div class="stage-head">
+        <div class="num" aria-hidden="true">3</div>
+        <h2 class="stage-title"><span class="emoji">💬</span> Slack 봇 — 배포 &amp; 채점</h2>
+      </div>
+      <span class="file">src/slack/app.mjs · Socket Mode</span>
+      <p class="cap">만든 문제를 슬랙 채널로 내보내고, 버튼 하나로 바로 채점해요.</p>
+      <ul class="pts">
+        <li><b>관리자</b> — 슬랙에서 <code>/퀴즈배포 &lt;과목&gt; &lt;문항수&gt;</code> 입력 → 채널에 퀴즈가 게시돼요</li>
+        <li><b>학습자</b> — 보기 버튼 클릭 → 즉시 "정답 여부 + 해설" 피드백, 틀리면 오답코드로 약점 표시</li>
+        <li>원하면 <b>매일 자동 배포</b>도 설정할 수 있어요 (선택)</li>
+      </ul>
+    </article>
+    <div class="down" aria-hidden="true">▼</div>
+
+    <!-- 4 -->
+    <article class="stage">
+      <div class="stage-head">
+        <div class="num" aria-hidden="true">4</div>
+        <h2 class="stage-title"><span class="emoji">📈</span> 학습 분석</h2>
+      </div>
+      <span class="file">src/core.mjs</span>
+      <p class="cap">여기는 <strong>기존 제품 로직</strong>이에요. 퀴즈 결과가 자동으로 이어져요.</p>
+      <ul class="pts">
+        <li>오답코드 → <b>복습 우선순위</b> → <b>학습 개입 효과 측정</b>으로 연결</li>
+      </ul>
+    </article>
+
+  </div>
+
+  <section class="secure" aria-label="보안 안내">
+    <span class="lock" aria-hidden="true">🔒</span>
+    <div>
+      <h3>개인정보는 레포에 올리지 않아요</h3>
+      <p>개인정보 · 실제 학습자 데이터 · 토큰(비밀키)은 코드 저장소(레포)에 올리지 않습니다. 토큰은 정은님의 로컬 <code>.env</code> 파일에만 저장돼요.</p>
+    </div>
+  </section>
+
+  <section class="todo" aria-label="정은님이 직접 하실 일">
+    <h3><span aria-hidden="true">✅</span> 정은님이 직접 하실 일 (3가지)</h3>
+    <p class="sub">이 세 가지만 하면 퀴즈 배포를 시작할 수 있어요.</p>
+    <ol class="steps">
+      <li><span class="txt"><code>data/exam-syllabus.json</code>에서 2차 출제범위를 실제 범위로 수정하기</span></li>
+      <li><span class="txt">Slack App 만들고 봇 토큰 발급 → 로컬 <code>.env</code>에 입력<small>문서 docs/slack-setup.md 참고</small></span></li>
+      <li><span class="txt"><code>npm run slack</code> 실행하면 퀴즈 배포 시작!</span></li>
+    </ol>
+  </section>
+
+  <footer>AI Exam Coach · 손해사정사 퀴즈 코치</footer>
+</div>
