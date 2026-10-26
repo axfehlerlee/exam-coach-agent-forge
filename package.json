@@ -8,7 +8,10 @@
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check src/core.mjs && node --check src/qwen.mjs && node --check scripts/sponsors/*.mjs && npm test",
+    "check": "node --check src/core.mjs && node --check src/qwen.mjs && node --check src/question-generator.mjs && node --check src/slack/app.mjs && node --check scripts/generate-questions.mjs && node --check scripts/slack-bot.mjs && node --check scripts/quiz-post.mjs && node --check scripts/sponsors/*.mjs && npm test",
+    "generate": "node scripts/generate-questions.mjs",
+    "slack": "node scripts/slack-bot.mjs",
+    "quiz:post": "node scripts/quiz-post.mjs",
     "sponsor:check": "node scripts/sponsors/field_check.mjs",
     "sponsor:qwen": "node scripts/sponsors/qwen_smoke.mjs",
     "sponsor:daytona": "node scripts/sponsors/daytona_validate.mjs",
@@ -17,7 +20,8 @@
   },
   "dependencies": {
     "@daytona/sdk": "^0.204.1",
-    "@nosana/kit": "^2.7.4"
+    "@nosana/kit": "^2.7.4",
+    "@slack/bolt": "^4.2.0"
   },
   "license": "UNLICENSED"
 }

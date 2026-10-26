@@ -1,0 +1,91 @@
+{
+  "notice": "합성(synthetic) 연습문제입니다. 실제 기출문제·답안·교재 본문이 아니며, syllabus 주제를 기반으로 생성되었습니다.",
+  "exam": "손해사정사 (Korean insurance loss adjuster)",
+  "round": 1,
+  "subject": "보험업법",
+  "subjectCode": "INSURANCE_BUSINESS_LAW",
+  "questionType": "multiple-choice",
+  "provider": "local-template-engine",
+  "generatedAt": "SYNTHETIC-SAMPLE",
+  "subjectMatched": false,
+  "topicInSyllabus": null,
+  "referencesUsed": 0,
+  "questions": [
+    {
+      "id": "GEN-R1-INSURANCE_BUSINESS_LAW-Q001",
+      "round": 1,
+      "subjectCode": "INSURANCE_BUSINESS_LAW",
+      "subject": "보험업법",
+      "topic": "보험업의 허가와 감독",
+      "questionNo": 1,
+      "questionType": "multiple-choice",
+      "stem": "[연습문제] '보험업법' 과목 '보험업의 허가와 감독' 단원에서 가장 옳은 설명을 고르시오.",
+      "choices": {
+        "A": "'보험업의 허가와 감독'의 핵심 개념·요건을 정확히 적용한 설명 (정답 예시)",
+        "B": "'보험업의 허가와 감독'의 적용 범위를 넓게 혼동한 설명",
+        "C": "'보험업의 허가와 감독'의 성립 요건을 반대로 적용한 설명",
+        "D": "'보험업의 허가와 감독'을 유사 개념과 구분하지 못한 설명"
+      },
+      "answer": "A",
+      "explanation": "정답은 A입니다. '보험업의 허가와 감독'의 핵심 요건을 정확히 적용한 선지이며, 나머지 선지는 범위 혼동·요건 반대 적용·유사개념 혼동을 유도하는 오답입니다. 실제 기출이 아닌 주제 기반 생성 연습문제입니다.",
+      "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q001:B",
+      "confusionMap": {
+        "B": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q001:B",
+          "diagnosis": "범위 혼동",
+          "misconception": "scope confusion"
+        },
+        "C": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q001:C",
+          "diagnosis": "요건 반대 적용",
+          "misconception": "condition reversal"
+        },
+        "D": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q001:D",
+          "diagnosis": "유사개념 혼동",
+          "misconception": "concept confusion"
+        }
+      },
+      "synthetic": true,
+      "source": "local-template-engine"
+    },
+    {
+      "id": "GEN-R1-INSURANCE_BUSINESS_LAW-Q002",
+      "round": 1,
+      "subjectCode": "INSURANCE_BUSINESS_LAW",
+      "subject": "보험업법",
+      "topic": "보험회사의 자산운용 규제",
+      "questionNo": 2,
+      "questionType": "multiple-choice",
+      "stem": "[연습문제] '보험업법' 과목 '보험회사의 자산운용 규제' 단원에서 가장 옳은 설명을 고르시오.",
+      "choices": {
+        "A": "'보험회사의 자산운용 규제'의 적용 범위를 넓게 혼동한 설명",
+        "B": "'보험회사의 자산운용 규제'의 핵심 개념·요건을 정확히 적용한 설명 (정답 예시)",
+        "C": "'보험회사의 자산운용 규제'의 성립 요건을 반대로 적용한 설명",
+        "D": "'보험회사의 자산운용 규제'을 유사 개념과 구분하지 못한 설명"
+      },
+      "answer": "B",
+      "explanation": "정답은 B입니다. '보험회사의 자산운용 규제'의 핵심 요건을 정확히 적용한 선지이며, 나머지 선지는 범위 혼동·요건 반대 적용·유사개념 혼동을 유도하는 오답입니다. 실제 기출이 아닌 주제 기반 생성 연습문제입니다.",
+      "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q002:A",
+      "confusionMap": {
+        "A": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q002:A",
+          "diagnosis": "범위 혼동",
+          "misconception": "scope confusion"
+        },
+        "C": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q002:C",
+          "diagnosis": "요건 반대 적용",
+          "misconception": "condition reversal"
+        },
+        "D": {
+          "confusionCode": "confusion:GEN-R1-INSURANCE_BUSINESS_LAW-Q002:D",
+          "diagnosis": "유사개념 혼동",
+          "misconception": "concept confusion"
+        }
+      },
+      "synthetic": true,
+      "source": "local-template-engine"
+    }
+  ]
+}
